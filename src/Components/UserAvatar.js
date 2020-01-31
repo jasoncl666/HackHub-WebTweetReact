@@ -4,9 +4,13 @@ class UserAvatar extends Component {
 
     render() {
 
+        const {
+            avatar
+        } = this.props;
+
         return(
-            <div className="row img-container">
-                <img className="logo" src={this.props.avatar} alt="webdxd"/>
+            <div className="img-container">
+                <img className="user-avatar" src={avatar} alt="webdxd"/>
             </div>
         );
     }

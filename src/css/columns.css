@@ -8,28 +8,26 @@
 
 [class*='col-'] {
     float:left;
+    margin: 1% 1%;
+    /* padding: 1% 0; */
 }
 
 .col-1of5 {
     width: 18%;
-    margin-left: 1%;
-    margin-right: 1%; 
+}
+
+.col-3of10 {
+    width: 28%;
 }
 
 .col-2of5 {
     width: 38%;
-    margin-left: 1%;
-    margin-right: 1%; 
 }
 
 .col-3of5 {
     width: 58%;
-    margin-left: 1%;
-    margin-right: 1%; 
 }
 
 .col-4of5 {
     width: 78%;
-    margin-left: 1%;
-    margin-right: 1%; 
 }

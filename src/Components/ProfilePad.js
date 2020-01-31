@@ -32,6 +32,7 @@ class ProfilePad extends Component {
             <div className='profile-content'>
 
                 <UserAvatar avatar={this.props.avatar}></UserAvatar>
+                
                 <div className='info'>
                     <h2> New User</h2>
                 </div>

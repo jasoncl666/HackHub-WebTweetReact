@@ -21,11 +21,18 @@ textarea {
     max-width: auto;
     width: 100%;
 }
+
 a {
     text-decoration: none;
     font-weight: bold;
     color: #29C9DE;
     text-align: center;
+}
+
+h1 {
+    width: 100%;
+    color: #707070;
+    margin: 1rem;
 }
 
 h4 {
@@ -207,6 +214,7 @@ input:focus, textarea:focus {
 
 #profile-form, #login-form,  #signup-form{
     width: 100%;
+    display: block;
 }
 
 label{
@@ -219,6 +227,29 @@ label{
     width: 100%;
     margin-bottom: 5px;
 }
+
+/* User Avatar Css*/
+
+.img-container {
+    background-color: rgb(154, 205, 226);
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin: 1em auto;
+    overflow: hidden;
+    text-align: center;
+}
+
+.user-avatar {
+    width: 100%;
+    height: auto;
+}
+
+.info{
+    display: block;
+    text-align: center;
+}
+
 
 .input-tweet {
     margin-left: 1rem;
@@ -336,6 +367,7 @@ button:disabled {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .uploadcare--widget, .uploadcare--widget__button {
