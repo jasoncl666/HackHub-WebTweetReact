@@ -1,10 +1,5 @@
 import React, {Component} from 'react';
-import FormElement from './FormElement'
-
-import '../css/columns.css';
-import '../css/main.css';
-import '../css/normalize.css';
-
+import FormElement from '../FormElement'
 
 /**
  * 
@@ -14,7 +9,7 @@ import '../css/normalize.css';
  class Login extends Component {
 
     state = {
-        content: "",
+        content: ""
     }
 
     handleSubmit = (event) => {

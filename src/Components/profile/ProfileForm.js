@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
 //import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-import UserAvatar from './UserAvatar'
-import FormElement from './FormElement'
-
-import '../css/columns.css';
-import '../css/main.css';
-import '../css/normalize.css';
+import UserAvatar from '../UserAvatar'
+import FormElement from '../FormElement'
 
 
 /**
@@ -14,7 +10,7 @@ import '../css/normalize.css';
  * Profile Page 
  */
 
- class Profile extends Component {
+ class ProfileForm extends Component {
 
     state = {
         content: "",
@@ -62,4 +58,4 @@ import '../css/normalize.css';
     }
  }
 
- export default Profile;
+ export default ProfileForm;
