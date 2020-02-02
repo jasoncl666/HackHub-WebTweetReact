@@ -3,7 +3,7 @@ import moment from 'moment';
 
 class TweetItem extends Component {
     render() {
-        const value = this.props;
+        const value = this.props.value;
         
         return (
             <div className="tweet">

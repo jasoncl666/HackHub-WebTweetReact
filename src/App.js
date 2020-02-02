@@ -14,9 +14,9 @@ function App() {
     <div className="App">
       <Nav logo={logo} avatar={logo}/>
       <Page avatar={logo}/>
-      <Profile avatar={logo}></Profile>
-      <Login></Login>
-      <Signup></Signup>
+      {/* <Profile avatar={logo}></Profile> */}
+      {/* <Login></Login> */}
+      {/* <Signup></Signup> */}
     </div>
   );
 }

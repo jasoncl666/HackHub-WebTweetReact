@@ -3,6 +3,7 @@ import Axios from 'axios';
 import TweetList from './TweetList';
 import TweetItem from './TweetItem';
 import ProfilePad from './ProfilePad';
+import TweetPost from './TweetPost'
 
 import '../css/columns.css';
 import '../css/main.css';
@@ -17,21 +18,21 @@ class Page extends Component {
         content: ''
     };
 
-    componentWillMount(){
+    componentWillMount = () => {
 
         const that = this;
 
-        Axios.get('')
+        Axios.get('https://tweet-api.webdxd.com/tweet')
         .then((response) => {
-            console.log(response);
+
+            // console.log(response.data.tweets[0].author.avatarUrl);
 
             that.setState({
-
-                tweets: [] // whatever the response structure it is to get all tweets
+                tweets: response.data.tweets
             })
-
-        });
+        })
     }
+ 
 
     handleTextChange = (e) => {
 
@@ -42,25 +43,19 @@ class Page extends Component {
     }
 
     render() {
+
+        // console.log(this.state.tweets);
+
         return (
             <div className="container">
                 <div className="col-3of10 bg-white">
                     <ProfilePad avatar={userAvatar}></ProfilePad>
                 </div>
                 <div className="col-3of5 bg-white">
-                    <div className="tweet">
-                        <form id="tweet-form">
-                            <div className="row">
-                                <img className="avatar-sm v-top" src={this.props.avatar} alt="avatar" />
-                                <input className="input-tweet" placeholder="What's up?" id="tweet-content" value={this.state.content} onChange={this.handleTextChange}></input>
-                            </div>
-                            <div className="row tweet-actions">
-                                <input type="hidden" role="uploadcare-uploader" name="content" id="tweet-image" data-public-key="7d92f12ba9b3c1d2afd1" data-images-only />
-                                <button className="btn-clear" type="button"><i className="far fa-image" id="tweet-image-btn"></i></button>
-                                <button className="btn-primary" type="button" id="post-btn" disabled={this.state.content? '' : 'disabled'}>Post</button>
-                            </div>
-                        </form>
-                    </div>
+                    
+                    <TweetPost avatar={this.props.avatar}/>
+
+                    {/* dont render TweetList rn as Mongo Server is down */}
                     <TweetList tweets={this.state.tweets}/>
                 </div>
             </div>
