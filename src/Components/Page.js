@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-import {Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Axios from 'axios';
 // import moment from 'moment';
 
 import Nav from './Nav'
-import SideBar from './SideBar'
 import TweetList from './tweet/TweetList';
 import ProfilePad from './ProfilePad';
+import ProfileForm from './profile/ProfileForm';
 import TweetPost from './tweet/TweetPost';
 import Login from './auth/Login';
+import Signup from './auth/Signup';
+
+
 
 import '../css/columns.css';
 import '../css/main.css';
 import '../css/normalize.css';
 // import '../css/fontawesome-all.css';
 
-import userAvatar from '../img/spongebob.png';
+// import userAvatar from '../img/spongebob.png';
 
 class Page extends Component {
 
@@ -86,8 +89,6 @@ class Page extends Component {
 
     render() {
 
-        // console.log(this.state.tweets);
-
         const {
             avatar
         } = this.props
@@ -95,8 +96,8 @@ class Page extends Component {
         return (
             <div>
                 <Nav logo={avatar} avatar={avatar}/>
+                
                 <div className="container">
-                    {/* <SideBar avatar={avatar}/>  not working for now */}
                     <div className="col-3of5 bg-white">
                         {this.state.token && <TweetPost avatar={avatar} handleNewPost={this.handleNewPost} />}
                         <TweetList tweets={this.state.tweets}/>

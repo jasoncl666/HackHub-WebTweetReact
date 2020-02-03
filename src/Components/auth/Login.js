@@ -13,18 +13,67 @@ import { baseUrl } from '../../config';
 
  class Login extends Component {
 
-    state = {
-        content: ""
+    constructor(props){
+
+        super(props);
+
+        this.state = {
+            username: "",
+            password: "",
+            inputvalid: ""
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.formUpdate = this.formUpdate.bind(this);
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault();
+
+    /**
+     * update local state when user enters 
+     * meanwhile checking if any input is left empty
+     */
+    formUpdate = (updateValue) => {
+
+        let prevState = this.state;
+        let formContent = {
+            ...prevState,
+            ...updateValue
+        }
+
+        formContent.inputvalid = formContent.username && formContent.password;
+
+        this.setState(formContent);
     }
 
-    handleTextChange = (event) => {
-        this.setState({
-            content: event.target.value
-        });
+    handleUsernameChange = (e) => {
+        this.formUpdate(e.target.value);
+    }
+
+    handlePasswordChange = (e) => {
+        this.formUpdate(e.target.value);
+    }
+
+    /**
+     * Sending post to API for login request
+     * 
+     * if token is granted (login succeed), up-lifting the token to Page Component and Redirect
+     */
+    handleSubmit = () => {
+        let that = this;
+
+        axios.post(baseUrl+"/auth/login", {
+            username: this.state.username,
+            password: this.state.password
+        }).then(res => {
+            if (res.data.error) {
+                console.log(res.data.error)
+            } else {
+                // res.data.token && that.props.handleTokenUpdate(res.data.token)
+                console.log(res)
+            }
+        })
     }
 
     render() {
@@ -41,14 +90,16 @@ import { baseUrl } from '../../config';
 
                     <div className="col-2of5 bg-white">
 
+                        <h2 className="row"> Welcome Back!</h2>
+
                         <div className="row profile-update">
 
                             <form id="login-form" onSubmit={this.handleSubmit}>
 
-                                <FormElement type={"text"} label={"Email"} value={"Enter your email"} onChangeFunc={this.handleTextChange}></FormElement>
-                                <FormElement type={"password"} label={"Password"} value={"Password here"} onChangeFunc={this.handleTextChange}></FormElement>
+                                <FormElement type={"text"} label={"Email"} value={"Enter your email"} onChangeFunc={this.handleUsernameChange}></FormElement>
+                                <FormElement type={"password"} label={"Password"} value={"Password here"} onChangeFunc={this.handlePasswordChange}></FormElement>
 
-                                <button className="btn-primary" type="submit" id="login-btn" disabled={this.state.content? '' : 'disabled'}>Login</button>
+                                <button className="btn-primary" type="submit" id="login-btn" disabled={this.state.inputvalid? '' : 'disabled'} onClick={this.handleSubmit}>Login</button>
                             </form>
                         </div>
 

@@ -13,22 +13,73 @@ import { baseUrl } from '../../config'
 
  class Signup extends Component {
 
-    state = {
-        content: "",
-        username: "",
-        password: "",
-        confirmPassword: ""
+    constructor(props) {
+
+        super(props);
+
+        this.state = {
+            username: "",
+            password: "",
+            confirmPassword: "",
+            inputValid: ""
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleRepeatPasswordChange = this.handleRepeatPasswordChange.bind(this);
+        this.formUpdate = this.formUpdate.bind(this);
+    }
+    
+    /**
+     * update local state when user enters 
+     * meanwhile checking if any input is left empty & confirming password 
+     */
+    formUpdate = (updateValue) => {
+
+        let prevState = this.state;
+        let formContent = {
+            ...prevState,
+            ...updateValue
+        };
+
+        formContent.inputValid = formContent.username && formContent.password && formContent.password === formContent.confirmPassword;
+
+        this.setState(formContent);
     }
 
+    handleUsernameChange = (e) => {
+        this.formUpdate({username: e.target.value})
+    }
+
+    handlePasswordChange = (e) => {
+        this.formUpdate({password: e.target.value})
+    }
+
+    handleRepeatPasswordChange = (e) => {
+        this.formUpdate({confirmPassword: e.target.value})
+    }
+
+    /**
+     * Sending post to API for signup request
+     * 
+     * if token is granted (signup succeed), Redirect to Login
+     */
     handleSubmit = (event) => {
         
-        
-    }
+        const that = this;
 
-    handleTextChange = (event) => {
-        this.setState({
-            content: event.target.value
-        });
+        axios.post( baseUrl+"/auth/signup", {
+            username: that.state.username,
+            password: that.state.password
+          }).then(res => {
+            if (res.data.error) {
+                console.log(res.data.error)
+            } else {
+                // res.data.token && that.props.handleTokenUpdate(res.data.token)
+                console.log(res)
+            }
+          })
     }
 
     render() {
@@ -49,12 +100,11 @@ import { baseUrl } from '../../config'
                         <div className="row profile-update">
                             <form id="signup-form" onSubmit={this.handleSubmit}>
 
-                                <FormElement type={"text"} label={"Email"} value={"Enter your email"}></FormElement>
-                                <FormElement type={"password"} label={"Password"} value={"Password here"}></FormElement>
-                                <FormElement type={"password"} label={"Confirm Password"} value={"Reenter Password"}></FormElement>
+                                <FormElement type={"text"} label={""} value={"Enter your email"} onChangeFunc={this.handleUsernameChange}></FormElement>
+                                <FormElement type={"password"} label={""} value={"Password here"} onChangeFunc={this.handlePasswordChange}></FormElement>
+                                <FormElement type={"password"} value={"Repeat Password"} onChangeFunc={this.handleRepeatPasswordChange}></FormElement>
                                 
-                                <button className="btn-primary space-top"  id="login-btn">Back to Login</button>
-                                <button className="btn-primary space-top"  type="submit" id="signup-btn" disabled={this.state.content? '' : 'disabled'}>Create Account</button>
+                                <button className="btn-primary space-top"  type="button" id="signup-btn" disabled={this.state.inputValid? '' : 'disabled'} onClick={this.handleSubmit}>Create Account</button>
                             </form>
                         </div>
 
