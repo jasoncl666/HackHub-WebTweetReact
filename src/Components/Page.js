@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
+import {Route, Link} from 'react-router-dom';
 import Axios from 'axios';
-import moment from 'moment';
+// import moment from 'moment';
+
+import Nav from './Nav'
+import SideBar from './SideBar'
 import TweetList from './tweet/TweetList';
-import TweetItem from './tweet/TweetItem';
 import ProfilePad from './ProfilePad';
-import TweetPost from './tweet/TweetPost'
+import TweetPost from './tweet/TweetPost';
+import Login from './auth/Login';
 
 import '../css/columns.css';
 import '../css/main.css';
 import '../css/normalize.css';
+// import '../css/fontawesome-all.css';
 
 import userAvatar from '../img/spongebob.png';
 
@@ -20,12 +25,27 @@ class Page extends Component {
 
         this.state = {
             tweets: [],
-            content: ''
+            username: '',
+            token: '1'
         }
 
-        this.handleNewPost = this.handleNewPost.bind(this)
+        this.handleNewPost = this.handleNewPost.bind(this);
+        this.handleTokenUpdate = this.handleTokenUpdate.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
     
+    handleTokenUpdate = (token) => {
+        this.setState({
+            token: token
+        })
+    }
+
+    handleLogout = () => {
+        this.setState({
+            token: ''
+        })
+    }
+
     // raw testing function for sending a new post
     // fow now authentication is not required
     handleNewPost = (newPost) => {
@@ -63,29 +83,27 @@ class Page extends Component {
             })
         })
     }
- 
-
-    displayTweets = () => {
-        console.log(this.state.tweets)
-    }
 
     render() {
 
         // console.log(this.state.tweets);
 
+        const {
+            avatar
+        } = this.props
+
         return (
-            <div className="container">
-                <div className="col-3of10 bg-white">
-                    <ProfilePad avatar={userAvatar}></ProfilePad>
-                </div>
-                <div className="col-3of5 bg-white">
-                    
-                    <TweetPost avatar={this.props.avatar} handleNewPost={this.handleNewPost}/>
-                    <TweetList tweets={this.state.tweets}/>
-                    <button onClick={this.displayTweets}>Test</button>
+            <div>
+                <Nav logo={avatar} avatar={avatar}/>
+                <div className="container">
+                    {/* <SideBar avatar={avatar}/>  not working for now */}
+                    <div className="col-3of5 bg-white">
+                        {this.state.token && <TweetPost avatar={avatar} handleNewPost={this.handleNewPost} />}
+                        <TweetList tweets={this.state.tweets}/>
+                    </div>
                 </div>
             </div>
-        );
+        )
     }
 }
 

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import '../css/columns.css';
-import '../css/main.css';
-import '../css/normalize.css';
+import { Link } from 'react-router-dom'
 
 class Nav extends Component {
     render() {
@@ -9,8 +7,9 @@ class Nav extends Component {
             <nav className="nav-bar">
                 <div className="container nav-container">
                     <ul>
-                        <li><a href="index.html"><img className="logo" src={this.props.logo} alt="webdxd" /></a></li>
-                        <li><a href="index.html">Home</a></li>
+                        <li><Link to="/"><img className="logo" src={this.props.logo} alt="webdxd" /></Link></li>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/login">Login</Link></li>
                     </ul>
                     <div>
                         <a href="profile.html"><img className="avatar-sm" src={this.props.avatar} alt="avatar" /></a>

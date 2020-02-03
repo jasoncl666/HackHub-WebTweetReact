@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
-import FormElement from '../FormElement'
+import { Link } from 'react-router-dom'
+import axios from 'axios';
+
+import FormElement from '../FormElement';
+import Nav from '../Nav';
+import { baseUrl } from '../../config';
 
 /**
  * 
@@ -23,21 +28,31 @@ import FormElement from '../FormElement'
     }
 
     render() {
+
+        const {
+            avatar
+        } = this.props
+        
         return (
+            <div>
+                <Nav logo={avatar} avatar={avatar}/>
 
-            <div className="container">   
+                <div className="container">   
 
-                <div className="col-2of5 bg-white">
+                    <div className="col-2of5 bg-white">
 
-                    <div className="row profile-update">
-                        <form id="login-form" onSubmit={this.handleSubmit}>
+                        <div className="row profile-update">
 
-                            <FormElement type={"text"} label={"Email"} value={"Enter your email"} onChangeFunc={this.handleTextChange}></FormElement>
-                            <FormElement type={"password"} label={"Password"} value={"Password here"} onChangeFunc={this.handleTextChange}></FormElement>
+                            <form id="login-form" onSubmit={this.handleSubmit}>
 
-                            <button className="btn-primary" type="submit" id="login-btn" disabled={this.state.content? '' : 'disabled'}>Login</button>
-                            <button className="btn-primary"  id="signup-btn">Signup</button>
-                        </form>
+                                <FormElement type={"text"} label={"Email"} value={"Enter your email"} onChangeFunc={this.handleTextChange}></FormElement>
+                                <FormElement type={"password"} label={"Password"} value={"Password here"} onChangeFunc={this.handleTextChange}></FormElement>
+
+                                <button className="btn-primary" type="submit" id="login-btn" disabled={this.state.content? '' : 'disabled'}>Login</button>
+                            </form>
+                        </div>
+
+                        <h5 className="row">Don't have an account? <Link to="/signup">Sign up</Link></h5>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 
-import '../css/columns.css';
-import '../css/main.css';
-import '../css/normalize.css';
-
 import UserAvatar from './UserAvatar';
 /**
  * Profile Pad Component within a Page

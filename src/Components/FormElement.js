@@ -12,7 +12,7 @@ class FormElement extends Component {
         return(
             <div>
                 <label>{this.props.label}</label>
-                <input className="input-profile" type={this.props.type} placeholder={this.props.value} onChange={this.props.onChangeFunc}></input>
+                <input className="input-profile" type={this.props.type} placeholder={this.props.value}></input>
             </div>
         )
     }

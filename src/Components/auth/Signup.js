@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom'
+import axios from 'axios';
+
 import FormElement from '../FormElement'
+import Nav from '../Nav';
+import { baseUrl } from '../../config'
 
 /**
  * 
@@ -10,6 +15,9 @@ import FormElement from '../FormElement'
 
     state = {
         content: "",
+        username: "",
+        password: "",
+        confirmPassword: ""
     }
 
     handleSubmit = (event) => {
@@ -24,25 +32,33 @@ import FormElement from '../FormElement'
     }
 
     render() {
+
+        const {
+            avatar
+        } = this.props
+
         return (
+            <div>
+                <Nav logo={avatar} avatar={avatar}/>
 
-            <div className="container">   
+                <div className="container">   
 
-                <div className="col-3of5 bg-white">
-                    <h1 className="row">Join Us Today</h1>
+                    <div className="col-3of5 bg-white">
+                        <h1 className="row">Join Us Today</h1>
 
-                    <div className="row profile-update">
-                        
-                        
-                        <form id="signup-form" onSubmit={this.handleSubmit}>
+                        <div className="row profile-update">
+                            <form id="signup-form" onSubmit={this.handleSubmit}>
 
-                            <FormElement type={"text"} label={"Email"} value={"Enter your email"} onChangeFunc={this.handleTextChange}></FormElement>
-                            <FormElement type={"password"} label={"Password"} value={"Password here"} onChangeFunc={this.handleTextChange}></FormElement>
-                            <FormElement type={"password"} label={"Confirm Password"} value={"Reenter Password"} onChangeFunc={this.handleTextChange}></FormElement>
-                            
-                            <button className="btn-primary space-top"  id="login-btn" disabled={this.state.content? '' : 'disabled'}>Back to Login</button>
-                            <button className="btn-primary space-top"  type="submit" id="signup-btn">Create Account</button>
-                        </form>
+                                <FormElement type={"text"} label={"Email"} value={"Enter your email"}></FormElement>
+                                <FormElement type={"password"} label={"Password"} value={"Password here"}></FormElement>
+                                <FormElement type={"password"} label={"Confirm Password"} value={"Reenter Password"}></FormElement>
+                                
+                                <button className="btn-primary space-top"  id="login-btn">Back to Login</button>
+                                <button className="btn-primary space-top"  type="submit" id="signup-btn" disabled={this.state.content? '' : 'disabled'}>Create Account</button>
+                            </form>
+                        </div>
+
+                        <h5 className="row">Have an account?<Link to="/login">Log in</Link></h5>
                     </div>
                 </div>
             </div>
