@@ -90,7 +90,7 @@ import { baseUrl } from '../../config'
 
         return (
             <div>
-                <Nav logo={avatar} avatar={avatar}/>
+                {/* <Nav logo={avatar} avatar={avatar}/> */}
 
                 <div className="container">   
 

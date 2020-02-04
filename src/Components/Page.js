@@ -29,24 +29,10 @@ class Page extends Component {
         this.state = {
             tweets: [],
             username: '',
-            token: '1'
+            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMzhlYTZhOTUzMjBjNGU1ZjRlN2Y0YiIsImlhdCI6MTU4MDc4ODMzMX0.bef2eleP4YqPW33llE0p5jqmBHFYkm1jJGaf60oIS-Q'
         }
 
         this.handleNewPost = this.handleNewPost.bind(this);
-        this.handleTokenUpdate = this.handleTokenUpdate.bind(this);
-        this.handleLogout = this.handleLogout.bind(this);
-    }
-    
-    handleTokenUpdate = (token) => {
-        this.setState({
-            token: token
-        })
-    }
-
-    handleLogout = () => {
-        this.setState({
-            token: ''
-        })
     }
 
     // raw testing function for sending a new post
@@ -87,16 +73,20 @@ class Page extends Component {
         })
     }
 
+    
     render() {
 
         const {
-            avatar
+            avatar,
+            handleLogout,
+            handleTokenUpdate,
+            token
         } = this.props
 
         return (
             <div>
-                <Nav logo={avatar} avatar={avatar}/>
-                
+                <Nav logo={avatar} handleLogout={handleLogout} handleTokenUpdate={handleTokenUpdate} token={token}/>
+
                 <div className="container">
                     <div className="col-3of5 bg-white">
                         {this.state.token && <TweetPost avatar={avatar} handleNewPost={this.handleNewPost} />}

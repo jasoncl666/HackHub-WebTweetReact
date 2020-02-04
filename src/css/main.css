@@ -22,11 +22,17 @@ textarea {
     width: 100%;
 }
 
-a {
+a, li {
     text-decoration: none;
     font-weight: bold;
     color: #29C9DE;
+    
     text-align: center;
+    cursor: pointer;
+}
+
+li {
+    color: rgb(58, 72, 78);
 }
 
 h1 {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import logo from './img/logo.svg';
 import './App.css';
@@ -8,27 +8,61 @@ import ProfileForm from './Components/profile/ProfileForm';
 import Login from './Components/auth/Login'
 import Signup from './Components/auth/Signup'
 
-function App() {
+class App extends Component{
 
-  return (
-    <Router>
-      <div className="App">
+  constructor(props){
+    super(props);
 
-        <Switch>
-          <Route exact path="/">
-            <div>
-              <Page avatar={logo}/>
-              <ProfileForm avatar={logo}/>
-            </div>
-          </Route>
+    this.state = {
+      token: ""
+    }
 
-          <Route path="/login"><Login avatar={logo}/></Route>
+    this.handleTokenUpdate = this.handleTokenUpdate.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
 
-          <Route path="/signup"><Signup avatar={logo}/></Route>
-        </Switch>
-      </div>
-    </Router>
-  )
+  handleTokenUpdate = (newToken) => {
+    this.setState({
+        token: newToken
+    })
+  }
+
+  handleLogout = () => {
+      this.setState({
+          token: ""
+      })
+  }
+
+  testTokenUpdate = () => {
+    console.log(this.state.token);
+  }
+
+  render(){
+    return (
+      <Router>
+        <div className="App">
+  
+          <Switch>
+            <Route exact path="/">
+              <div>
+                <Page avatar={logo} handleLogout={this.handleLogout} handleTokenUpdate={this.handleTokenUpdate} token={this.state.token}/>
+                {/* <ProfileForm avatar={logo}/> */}
+              </div>
+            </Route>
+  
+            {/* <Route path="/login" render={() => <Login avatar={logo}/>}/> */}
+  
+            <Route path="/signup" render={() => <Signup avatar={logo}/>}/>
+  
+  
+          </Switch>
+
+          <button onClick={this.testTokenUpdate}> Test Token Update</button>
+        </div>
+      </Router>
+    )
+  }
+  
 }
 
 export default App;

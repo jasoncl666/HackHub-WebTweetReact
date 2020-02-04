@@ -48,31 +48,31 @@ import { baseUrl } from '../../config';
     }
 
     handleUsernameChange = (e) => {
-        this.formUpdate(e.target.value);
+        this.formUpdate({username: e.target.value});
     }
 
     handlePasswordChange = (e) => {
-        this.formUpdate(e.target.value);
+        this.formUpdate({password: e.target.value});
     }
 
     /**
      * Sending post to API for login request
      * 
      * if token is granted (login succeed), up-lifting the token to Page Component and Redirect
+     * 
+     * 
      */
     handleSubmit = () => {
         let that = this;
 
+        console.log(that.state);
+
         axios.post(baseUrl+"/auth/login", {
-            username: this.state.username,
-            password: this.state.password
+            username: that.state.username,
+            password: that.state.password
         }).then(res => {
-            if (res.data.error) {
-                console.log(res.data.error)
-            } else {
-                // res.data.token && that.props.handleTokenUpdate(res.data.token)
-                console.log(res)
-            }
+
+            console.log(res)
         })
     }
 
@@ -84,7 +84,7 @@ import { baseUrl } from '../../config';
         
         return (
             <div>
-                <Nav logo={avatar} avatar={avatar}/>
+                {/* <Nav logo={avatar} avatar={avatar}/> */}
 
                 <div className="container">   
 
