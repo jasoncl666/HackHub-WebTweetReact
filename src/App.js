@@ -43,14 +43,14 @@ class App extends Component{
         <div className="App">
   
           <Switch>
-            <Route exact path="/">
+            <Route exact path="/" render={()=> 
               <div>
                 <Page avatar={logo} handleLogout={this.handleLogout} handleTokenUpdate={this.handleTokenUpdate} token={this.state.token}/>
-                {/* <ProfileForm avatar={logo}/> */}
+                <ProfileForm avatar={logo}/>
               </div>
-            </Route>
+            }/>
   
-            {/* <Route path="/login" render={() => <Login avatar={logo}/>}/> */}
+            <Route path="/login" render={() => <Login avatar={logo}/>}/>
   
             <Route path="/signup" render={() => <Signup avatar={logo}/>}/>
   
