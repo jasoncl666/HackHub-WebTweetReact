@@ -7,7 +7,7 @@ import { baseUrl } from '../../config'
 
 /**
  * 
- * Login Page 
+ * Signup Page 
  */
 
  class Signup extends Component {
@@ -93,7 +93,7 @@ import { baseUrl } from '../../config'
                         <h1 className="row">Join Us Today</h1>
 
                         <div className="row profile-update">
-                            <form id="signup-form" onSubmit={this.handleSubmit}>
+                            <form id="signup-form">
 
                                 <FormElement type={"text"} label={""} value={"Enter your email"} onChangeFunc={this.handleUsernameChange}></FormElement>
                                 <FormElement type={"password"} label={""} value={"Password here"} onChangeFunc={this.handlePasswordChange}></FormElement>

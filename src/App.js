@@ -53,7 +53,7 @@ class App extends Component{
               </div>
             }/>
         
-            <Route path="/login" render={() => <Login avatar={logo}/>}/>
+            <Route path="/login" render={() => <Login avatar={logo} handleTokenUpdate={this.handleTokenUpdate}/>}/>
         
             <Route path="/signup" render={() => <Signup avatar={logo} handleTokenUpdate={this.handleTokenUpdate}/>}/>
 

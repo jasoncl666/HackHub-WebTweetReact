@@ -66,12 +66,17 @@ import { baseUrl } from '../../config';
 
         console.log(that.state);
 
-        axios.post(baseUrl+"/auth/login", {
+        axios.post( baseUrl+"/auth/login", {
             username: that.state.username,
             password: that.state.password
         }).then(res => {
 
-            console.log(res)
+            if (res.data.error) {
+                console.log(res.data.error)
+            } else {
+                that.props.handleTokenUpdate(res.data.token);
+                console.log(res.data.token);
+            }
         })
     }
 
@@ -93,12 +98,12 @@ import { baseUrl } from '../../config';
 
                         <div className="row profile-update">
 
-                            <form id="login-form" onSubmit={this.handleSubmit}>
+                            <form id="login-form">
 
                                 <FormElement type={"text"} label={"Email"} value={"Enter your email"} onChangeFunc={this.handleUsernameChange}></FormElement>
                                 <FormElement type={"password"} label={"Password"} value={"Password here"} onChangeFunc={this.handlePasswordChange}></FormElement>
 
-                                <button className="btn-primary" type="submit" id="login-btn" disabled={this.state.inputvalid? '' : 'disabled'} onClick={this.handleSubmit}>Login</button>
+                                <button className="btn-primary" type="button" id="login-btn" disabled={this.state.inputvalid? '' : 'disabled'} onClick={this.handleSubmit}>Login</button>
                             </form>
                         </div>
 
