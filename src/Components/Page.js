@@ -10,6 +10,7 @@ import ProfileForm from './profile/ProfileForm';
 import TweetPost from './tweet/TweetPost';
 import Login from './auth/Login';
 import Signup from './auth/Signup';
+import SideBar from './SideBar';
 
 
 
@@ -79,14 +80,12 @@ class Page extends Component {
         const {
             avatar,
             handleLogout,
-            handleTokenUpdate,
             token
         } = this.props
 
         return (
             <div>
-                <Nav logo={avatar} handleLogout={handleLogout} handleTokenUpdate={handleTokenUpdate} token={token}/>
-
+                <Nav logo={avatar} handleLogout={handleLogout} token={token}/>
                 <div className="container">
                     <div className="col-3of5 bg-white">
                         {this.state.token && <TweetPost avatar={avatar} handleNewPost={this.handleNewPost} />}

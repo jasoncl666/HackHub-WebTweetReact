@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios';
 
 import FormElement from '../FormElement'
-import Nav from '../Nav';
 import { baseUrl } from '../../config'
 
 /**
@@ -76,17 +75,13 @@ import { baseUrl } from '../../config'
             if (res.data.error) {
                 console.log(res.data.error)
             } else {
-                // res.data.token && that.props.handleTokenUpdate(res.data.token)
-                console.log(res)
+                that.props.handleTokenUpdate(res.data.token);
+                console.log(res.data.token);
             }
           })
     }
 
     render() {
-
-        const {
-            avatar
-        } = this.props
 
         return (
             <div>
@@ -109,6 +104,8 @@ import { baseUrl } from '../../config'
                         </div>
 
                         <h5 className="row">Have an account?<Link to="/login">Log in</Link></h5>
+                        <h5 className="row"><Link to="/"> home </Link></h5>
+                        
                     </div>
                 </div>
             </div>

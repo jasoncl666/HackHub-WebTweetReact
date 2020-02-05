@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import logo from './img/logo.svg';
 import './App.css';
 
@@ -25,6 +25,9 @@ class App extends Component{
     this.setState({
         token: newToken
     })
+
+    console.log("new token: " + newToken)
+    console.log("state: " + this.state.token)
   }
 
   handleLogout = () => {
@@ -35,31 +38,29 @@ class App extends Component{
 
   testTokenUpdate = () => {
     console.log(this.state.token);
+    return <Redirect to="/signup"/>
   }
 
   render(){
     return (
       <Router>
         <div className="App">
-  
           <Switch>
             <Route exact path="/" render={()=> 
               <div>
-                <Page avatar={logo} handleLogout={this.handleLogout} handleTokenUpdate={this.handleTokenUpdate} token={this.state.token}/>
-                <ProfileForm avatar={logo}/>
+                <Page avatar={logo} handleLogout={this.handleLogout} token={this.state.token}/>
+                <button onClick={this.testTokenUpdate}> Test Token Update</button>
               </div>
             }/>
-  
+        
             <Route path="/login" render={() => <Login avatar={logo}/>}/>
-  
-            <Route path="/signup" render={() => <Signup avatar={logo}/>}/>
-  
-  
-          </Switch>
+        
+            <Route path="/signup" render={() => <Signup avatar={logo} handleTokenUpdate={this.handleTokenUpdate}/>}/>
 
-          <button onClick={this.testTokenUpdate}> Test Token Update</button>
+          </Switch>
         </div>
       </Router>
+      
     )
   }
   

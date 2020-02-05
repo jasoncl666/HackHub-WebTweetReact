@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 import FormElement from '../FormElement';
-import Nav from '../Nav';
 import { baseUrl } from '../../config';
 
 /**
