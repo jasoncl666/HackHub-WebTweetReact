@@ -73,7 +73,7 @@ import { baseUrl } from '../../config';
         Axios.put(baseUrl+"/profile/", this.state, {
             headers: {
                 Authorization: 'Bearer ' + this.props.token
-            },
+            }
         }).then(res => {
             if (res.data.error) {
                 console.log(res.data.error)
@@ -128,7 +128,8 @@ import { baseUrl } from '../../config';
                                 <label>Bio</label>
                                 <textarea rows="4" placeholder="Tell us about yourself" onChange={this.handleBioChange}></textarea>
                             </div> 
-                            <Link to="/" className="btn-primary" onClick={this.handleProfileUpdate}>Update</Link>
+                            <button className="btn-primary" type="button" onClick={this.handleProfileUpdate}>Update</button>
+                            <Link to="/">Main Page</Link>
                         </form>
                     </div>
                 </div>

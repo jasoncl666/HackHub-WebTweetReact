@@ -25,7 +25,11 @@ class Page extends Component {
 
         this.state = {
             tweets: [],
-            profile: {}
+            profile: {},
+            newPost: {
+                content: "",
+                imageUrl: ""
+            }
         }
 
         this.handleNewPost = this.handleNewPost.bind(this);
@@ -42,8 +46,8 @@ class Page extends Component {
             createAt: '2018-06-10T15:37:29.033Z',
             author: {
                 avatarUrl: 'https://ucarecdn.com/8c34b406-c767-4858-91e2-cb1e45ad231f/',
-                username: 'un-auth-User-1',
-                name: 'unauth-U-1',
+                username: this.props.profile.username,
+                name: this.props.profile.name,
             },
             content: newPost,
             _id: Math.random().toString(36).substr(2, 9)
@@ -52,7 +56,23 @@ class Page extends Component {
         console.log(newPost)
 
         this.setState({
-            tweets: tweets
+            tweets: tweets,
+            newPost: {
+                content: newPost,
+                imageUrl: "https://ucarecdn.com/8c34b406-c767-4858-91e2-cb1e45ad231f/"
+            }
+        })
+
+        Axios.post(baseUrl+"/tweet", this.state.newPost, {
+            headers: {
+                Authorization: 'Bearer ' + this.props.token
+            }
+        }).then(res => {
+            if (res.data.error) {
+                console.log(res.data.error)
+            } else {
+                console.log(res);
+            }
         })
     }
 
@@ -72,17 +92,8 @@ class Page extends Component {
 
         // Expect every time reload Page, profile is retrieved from server
         // Not sure if this mount function will be called each refresh
-        Axios.get(baseUrl+'/profile', {
-            headers: {
-                Authorization: 'Bearer ' + this.props.token
-            }
-        })
-        .then(res => {
-
-            console.log("retriving profile !!")
-            that.setState({
-                profile: res.data.profile
-            })
+        this.setState({
+            profile: this.props.profile
         })
     }
 
