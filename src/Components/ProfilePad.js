@@ -15,22 +15,27 @@ import UserAvatar from './UserAvatar';
 
 class ProfilePad extends Component {
 
-    state = {
-        avatar:  '',
-        username: '',
-        brithday: ''
-    }
-
     render() {
+
+        const{
+            profile
+        } = this.props
+
+        const name = profile.name;
+        const country = profile.location;
+        const bio = profile.bio;
+        const avatarUrl = profile.avatarUrl;
 
         return (
 
             <div className='profile-content'>
 
-                <UserAvatar avatar={this.props.avatar}></UserAvatar>
+                <UserAvatar avatar={"../"+avatarUrl}></UserAvatar>
                 
                 <div className='info'>
-                    <h2> New User</h2>
+                    <h2> {"Hello, " + name}</h2>
+                    <h4>{country}</h4>
+                    <h4>{bio}</h4>
                 </div>
             </div>
         );

@@ -1,55 +1,134 @@
 import React, {Component} from 'react';
 //import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-
+import { Link } from 'react-router-dom'
 import UserAvatar from '../UserAvatar'
 import FormElement from '../FormElement'
+import Axios from 'axios';
+
+import { baseUrl } from '../../config';
 
 
 /**
  * 
- * Profile Page 
+ * Profile Edit Page 
+ * 
+ * Only 
  */
 
  class ProfileForm extends Component {
 
-    state = {
-        content: "",
-        FromEle1Label: "Gender",
-        FromEle2Label: "Country",
-        FromEle1Value: "Mr or Mrs",
-        FromEle2Value: "your Location"
+    constructor(props){
+
+        super(props);
+
+        this.state = {
+            name: "",
+            location: "",
+            bio: "",
+            avatarUrl: ""
+        }
+
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleCountryChange = this.handleCountryChange.bind(this);
+        this.handleBioChange = this.handleBioChange.bind(this);
+        this.handleAvatarChange = this.handleAvatarChange.bind(this);
+        this.handleProfileUpdate = this.handleProfileUpdate.bind(this);
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault();
+    fromUpdate = (updateValue) => {
+
+        let prevState = this.profile;
+        let formContent = {
+            ...prevState,
+            ...updateValue
+        }
+
+        this.setState(formContent);
     }
 
-    handleTextChange = (event) => {
+    handleNameChange = (e) => {
+        this.fromUpdate({name: e.target.value})
+    }
+
+    handleCountryChange = (e) => {
+        this.fromUpdate({location: e.target.value})
+    }
+
+    handleBioChange = (e) => {
+        this.fromUpdate({bio: e.target.value})
+    }
+
+    handleAvatarChange = (e) => {
+        this.fromUpdate({avatarUrl: e.target.value})
+    }
+
+
+    handleProfileUpdate = (event) => {
+
+        let that = this;
+
+        console.log("update profile: ")
+        console.log(this.state)
+
+        Axios.put(baseUrl+"/profile/", this.state, {
+            headers: {
+                Authorization: 'Bearer ' + this.props.token
+            },
+        }).then(res => {
+            if (res.data.error) {
+                console.log(res.data.error)
+            } else {
+                console.log(res);
+                that.props.handleProfileUpdate(res.data.profile)
+            }
+        })
+    }
+
+    componentWillMount = () =>{ 
+
+        const {profile} = this.props
+
         this.setState({
-            content: event.target.value
-        });
+            name: profile.name,
+            location: profile.location,
+            bio: profile.bio,
+            avatarUrl: profile.avatarUrl
+        })
     }
 
     render() {
+
+        const{
+            avatar,
+            token
+            // profile
+        } = this.props
+
+        // const name = profile.name;
+        // const country = profile.country;
+        // const bio = profile.country;
+        // const avatarUrl = profile.avatarUrl;
+
+
         return (
 
             <div className="container">   
 
                 <div className="col-2of5 bg-white">
 
-                    <UserAvatar avatar={this.props.avatar}></UserAvatar>
+                    <UserAvatar avatar={avatar}></UserAvatar>
 
                     <div className="row profile-update">
-                        <form id="profile-form" onSubmit={this.handleSubmit}>
+                        <form id="profile-form">
 
-                            <FormElement type={"text"} label={this.state.FromEle1Label} value={this.state.FromEle1Value} onChangeFunc={this.handleTextChange}></FormElement>
-                            <FormElement type={"text"} label={this.state.FromEle2Label} value={this.state.FromEle2Value} onChangeFunc={this.handleTextChange}></FormElement>
+                            <FormElement type={"text"} label={"Name"} value={this.state.name} onChangeFunc={this.handleNameChange}></FormElement>
+                            <FormElement type={"text"} label={"Country"} value={"enter your country"} onChangeFunc={this.handleCountryChange}></FormElement>
 
                             <div>
-                                <label>Descriptioon</label>
-                                <textarea rows="4" placeholder="Tell us about yourself" onChange={this.handleTextChange}></textarea>
+                                <label>Bio</label>
+                                <textarea rows="4" placeholder="Tell us about yourself" onChange={this.handleBioChange}></textarea>
                             </div> 
-                            <button className="btn-primary" type="submit" id="update-btn" disabled={this.state.content? '' : 'disabled'}>Update</button>
+                            <Link to="/" className="btn-primary" onClick={this.handleProfileUpdate}>Update</Link>
                         </form>
                     </div>
                 </div>

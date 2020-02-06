@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import logo from './img/logo.svg';
 import './App.css';
 
@@ -7,6 +7,9 @@ import Page from './Components/Page';
 import ProfileForm from './Components/profile/ProfileForm';
 import Login from './Components/auth/Login'
 import Signup from './Components/auth/Signup'
+import Axios from 'axios';
+
+import { baseUrl } from './config';
 
 class App extends Component{
 
@@ -14,20 +17,19 @@ class App extends Component{
     super(props);
 
     this.state = {
-      token: ""
+      token: "",
+      profile: {}
     }
 
     this.handleTokenUpdate = this.handleTokenUpdate.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleProfileUpdate = this.handleProfileUpdate.bind(this);
   }
 
   handleTokenUpdate = (newToken) => {
     this.setState({
         token: newToken
     })
-
-    console.log("new token: " + newToken)
-    console.log("state: " + this.state.token)
   }
 
   handleLogout = () => {
@@ -36,9 +38,14 @@ class App extends Component{
       })
   }
 
-  testTokenUpdate = () => {
-    console.log(this.state.token);
-    return <Redirect to="/signup"/>
+  handleProfileUpdate = (newProfile) => {
+    this.setState({
+      profile: newProfile
+    })
+
+    console.log("App Profile");
+    console.log(newProfile);
+
   }
 
   render(){
@@ -47,15 +54,19 @@ class App extends Component{
         <div className="App">
           <Switch>
             <Route exact path="/" render={()=> 
-              <div>
-                <Page avatar={logo} handleLogout={this.handleLogout} token={this.state.token}/>
-                <button onClick={this.testTokenUpdate}> Test Token Update</button>
-              </div>
-            }/>
+              <Page avatar={logo} handleLogout={this.handleLogout} handleProfileUpdate={this.handleProfileUpdate} token={this.state.token} profile={this.state.profile}/>}/>
         
-            <Route path="/login" render={() => <Login avatar={logo} handleTokenUpdate={this.handleTokenUpdate}/>}/>
+            <Route path="/login" render={() => 
+              <Login handleTokenUpdate={this.handleTokenUpdate} handleProfileUpdate={this.handleProfileUpdate} token={this.state.token}/>}/>
         
-            <Route path="/signup" render={() => <Signup avatar={logo} handleTokenUpdate={this.handleTokenUpdate}/>}/>
+            <Route path="/signup" render={() => 
+              <Signup handleTokenUpdate={this.handleTokenUpdate} handleProfileUpdate={this.handleProfileUpdate} token={this.state.token}/>}/>
+            
+            {/* <Route exact path="/profile" render={() => 
+              <Profile avatar={logo} profile={this.state.profile}/>}/> */}
+
+            <Route path="/profile/edit" render={() => 
+              <ProfileForm avatar={logo} handleProfileUpdate={this.handleProfileUpdate} token={this.state.token} profile={this.state.profile}/>}/>
 
           </Switch>
         </div>

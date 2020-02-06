@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom'
-import axios from 'axios';
+import Axios from 'axios';
 
 import FormElement from '../FormElement';
 import { baseUrl } from '../../config';
@@ -66,7 +66,7 @@ import { baseUrl } from '../../config';
 
         console.log(that.state);
 
-        axios.post( baseUrl+"/auth/login", {
+        Axios.post( baseUrl+"/auth/login", {
             username: that.state.username,
             password: that.state.password
         }).then(res => {
@@ -75,7 +75,8 @@ import { baseUrl } from '../../config';
                 console.log(res.data.error)
             } else {
                 that.props.handleTokenUpdate(res.data.token);
-                console.log(res.data.token);
+                that.props.handleProfileUpdate(res.data.profile)
+
             }
         })
     }
@@ -83,7 +84,7 @@ import { baseUrl } from '../../config';
     render() {
 
         const {
-            avatar
+            token
         } = this.props
         
         return (
@@ -107,7 +108,8 @@ import { baseUrl } from '../../config';
                             </form>
                         </div>
 
-                        <h5 className="row">Don't have an account? <Link to="/signup">Sign up</Link></h5>
+                        {token? <h5 className="row"><Link to="/">Your Page</Link></h5> : <h5 className="row">Don't have an account? <Link to="/signup">Sign up</Link></h5>}
+                        
                     </div>
                 </div>
             </div>

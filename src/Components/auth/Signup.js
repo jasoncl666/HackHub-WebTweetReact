@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Link, Redirect } from 'react-router-dom'
-import axios from 'axios';
+import Axios from 'axios';
 
 import FormElement from '../FormElement'
 import { baseUrl } from '../../config'
@@ -68,7 +68,7 @@ import { baseUrl } from '../../config'
         
         const that = this;
 
-        axios.post( baseUrl+"/auth/signup", {
+        Axios.post( baseUrl+"/auth/signup", {
             username: that.state.username,
             password: that.state.password
           }).then(res => {

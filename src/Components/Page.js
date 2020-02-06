@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Axios from 'axios';
+import { baseUrl } from '../config';
 // import moment from 'moment';
 
 import Nav from './Nav'
 import TweetList from './tweet/TweetList';
 import ProfilePad from './ProfilePad';
-import ProfileForm from './profile/ProfileForm';
 import TweetPost from './tweet/TweetPost';
-import Login from './auth/Login';
-import Signup from './auth/Signup';
-import SideBar from './SideBar';
 
 
 
@@ -29,8 +25,7 @@ class Page extends Component {
 
         this.state = {
             tweets: [],
-            username: '',
-            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMzhlYTZhOTUzMjBjNGU1ZjRlN2Y0YiIsImlhdCI6MTU4MDc4ODMzMX0.bef2eleP4YqPW33llE0p5jqmBHFYkm1jJGaf60oIS-Q'
+            profile: {}
         }
 
         this.handleNewPost = this.handleNewPost.bind(this);
@@ -61,18 +56,45 @@ class Page extends Component {
         })
     }
 
+    /**
+     * Loading tweets and profile when mounting this page
+     */
     componentWillMount = () => {
 
         const that = this;
 
-        Axios.get('https://tweet-api.webdxd.com/tweet')
-        .then((response) => {
-
+        Axios.get(baseUrl+'/tweet')
+        .then(res => {
             that.setState({
-                tweets: response.data.tweets
+                tweets: res.data.tweets
+            })
+        })
+
+        // Expect every time reload Page, profile is retrieved from server
+        // Not sure if this mount function will be called each refresh
+        Axios.get(baseUrl+'/profile', {
+            headers: {
+                Authorization: 'Bearer ' + this.props.token
+            }
+        })
+        .then(res => {
+
+            console.log("retriving profile !!")
+            that.setState({
+                profile: res.data.profile
             })
         })
     }
+
+    /**
+     * test for token update and profile update
+     */
+    testUpdate = () => {
+        console.log("Page Token: " + this.props.token);
+        console.log("Page Profile: ")
+        console.log(this.state.profile)
+        // return <Redirect to="/signup"/>
+      }
 
     
     render() {
@@ -87,10 +109,14 @@ class Page extends Component {
             <div>
                 <Nav logo={avatar} handleLogout={handleLogout} token={token}/>
                 <div className="container">
+                    <div className="col-3of10 bg-white">
+                        <ProfilePad profile={this.state.profile} />
+                    </div>
                     <div className="col-3of5 bg-white">
-                        {this.state.token && <TweetPost avatar={avatar} handleNewPost={this.handleNewPost} />}
+                        {this.props.token && <TweetPost avatar={avatar} handleNewPost={this.handleNewPost} />}
                         <TweetList tweets={this.state.tweets}/>
                     </div>
+                    <button onClick={this.testUpdate}> Test Update</button>
                 </div>
             </div>
         )
