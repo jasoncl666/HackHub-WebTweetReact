@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Axios from 'axios';
+import { baseUrl } from '../../config';
 
 class TweetPost extends Component {
     constructor(props) {
@@ -18,14 +20,41 @@ class TweetPost extends Component {
 
     handlePost() {
 
-        console.log('Post button clicked')
+        let that = this;
         
+        console.log("New Content: " + this.state.content)
+        Axios.post(baseUrl+"/tweet", {
+            content: that.state.content,
+            imageUrl: 'https://ucarecdn.com/8c34b406-c767-4858-91e2-cb1e45ad231f/'
+        }, {
+            headers: {
+                Authorization: 'Bearer ' + this.props.token
+            }
+        }).then(res => {
+            if (res.data.error) {
+                console.log(res.data.error)
+            } else {
+                console.log("Posting tweet: ")
+                console.log(res);
+
+                that.setState({
+                    content: ""
+                })
+
+                that.props.handleNewPost()
+            }
+        })
+
+
         this.props.handleNewPost(this.state.content)
         this.setState({
             content: ''
         })
     }
 
+    componentWillUnmount = () => {
+        console.log("TweetPost unmounted")
+    }
     render() {
 
         const {

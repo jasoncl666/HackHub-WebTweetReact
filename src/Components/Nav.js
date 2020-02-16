@@ -11,7 +11,9 @@ class Nav extends Component {
 
         const {
             logo,
-            handleLogout
+            handleLogout,
+            userAvatar,
+            isInMainPAge
         } = this.props
 
         return (
@@ -20,11 +22,11 @@ class Nav extends Component {
                     <ul>
                         <li><Link to="/"><img className="logo" src={logo} alt="webdxd" /></Link></li>
                         <li><Link to="/">Home</Link></li>
-                        {this.props.token? <li onClick={handleLogout}>Logout</li> : <li><Link to="/login">Login</Link></li> }
+                        {isInMainPAge? (this.props.token ? <li onClick={handleLogout}>Logout</li> : <li><Link to="/login">Login</Link></li>) : "" }
                         {this.props.token && <li><Link to="/profile/edit">Profile</Link></li>}
                     </ul>
                     <div>
-                        <a href="profile.html"><img className="avatar-sm" src={logo} alt="avatar" /></a>
+                        <a href="profile.html"><img className="avatar-sm" src={userAvatar} alt="avatar" /></a>
                         {/* Remember to close image tag */}
                     </div>
                 </div>

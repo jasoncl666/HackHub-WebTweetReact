@@ -17,23 +17,28 @@ class ProfilePad extends Component {
 
     render() {
 
-        const{
-            profile
+        let {
+            profile: {
+                name,
+                country,
+                bio,
+                avatarUrl
+            }
         } = this.props
 
-        const name = profile.name;
-        const country = profile.location;
-        const bio = profile.bio;
-        const avatarUrl = profile.avatarUrl;
+        // const name = profile.name;
+        // const country = profile.location;
+        // const bio = profile.bio;
+        avatarUrl = avatarUrl || 'https://ucarecdn.com/8c34b406-c767-4858-91e2-cb1e45ad231f/';
 
         return (
 
             <div className='profile-content'>
 
-                <UserAvatar avatar={"../"+avatarUrl}></UserAvatar>
-                
+                <UserAvatar avatar={avatarUrl}></UserAvatar>
+
                 <div className='info'>
-                    <h2> {"Hello, " + name}</h2>
+                    <h3><b>{name? "Hello, " + name : "Welcome to Twitter"}</b></h3>
                     <h4>{country}</h4>
                     <h4>{bio}</h4>
                 </div>

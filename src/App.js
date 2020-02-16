@@ -30,6 +30,8 @@ class App extends Component{
     this.setState({
         token: newToken
     })
+
+    console.log("App Token: " + this.state.token)
   }
 
   handleLogout = () => {
@@ -49,18 +51,24 @@ class App extends Component{
   }
 
   render(){
+
+    let hL = this.handleLogout;
+    let hTU = this.handleTokenUpdate;
+    let hPU = this.handleProfileUpdate;
+    let token = this.state.token;
+
     return (
       <Router>
         <div className="App">
           <Switch>
             <Route exact path="/" render={()=> 
-              <Page avatar={logo} handleLogout={this.handleLogout} handleProfileUpdate={this.handleProfileUpdate} token={this.state.token} profile={this.state.profile}/>}/>
+              <Page logo={logo} handleLogout={hL} handleTokenUpdate={hTU} handleProfileUpdate={hPU} token={token} profile={this.state.profile}/>}/>
         
             <Route path="/login" render={() => 
-              <Login handleTokenUpdate={this.handleTokenUpdate} handleProfileUpdate={this.handleProfileUpdate} token={this.state.token}/>}/>
+              <Login logo={logo} handleTokenUpdate={hTU} handleProfileUpdate={hPU} token={token}/>}/>
         
             <Route path="/signup" render={() => 
-              <Signup handleTokenUpdate={this.handleTokenUpdate} handleProfileUpdate={this.handleProfileUpdate} token={this.state.token}/>}/>
+              <Signup logo={logo} handleTokenUpdate={hTU} handleProfileUpdate={hPU} token={token}/>}/>
             
             {/* <Route exact path="/profile" render={() => 
               <Profile avatar={logo} profile={this.state.profile}/>}/> */}

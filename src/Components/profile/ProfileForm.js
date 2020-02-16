@@ -22,14 +22,14 @@ import { baseUrl } from '../../config';
         super(props);
 
         this.state = {
-            name: "",
-            location: "",
-            bio: "",
-            avatarUrl: ""
+            name: props.profile.name,
+            location: props.profile.location || '',
+            bio: props.profile.bio || '',
+            avatarUrl: props.profile.avatarUrl
         }
 
         this.handleNameChange = this.handleNameChange.bind(this);
-        this.handleCountryChange = this.handleCountryChange.bind(this);
+        this.handleLocationChange = this.handleLocationChange.bind(this);
         this.handleBioChange = this.handleBioChange.bind(this);
         this.handleAvatarChange = this.handleAvatarChange.bind(this);
         this.handleProfileUpdate = this.handleProfileUpdate.bind(this);
@@ -50,7 +50,7 @@ import { baseUrl } from '../../config';
         this.fromUpdate({name: e.target.value})
     }
 
-    handleCountryChange = (e) => {
+    handleLocationChange = (e) => {
         this.fromUpdate({location: e.target.value})
     }
 
@@ -84,30 +84,11 @@ import { baseUrl } from '../../config';
         })
     }
 
-    componentWillMount = () =>{ 
-
-        const {profile} = this.props
-
-        this.setState({
-            name: profile.name,
-            location: profile.location,
-            bio: profile.bio,
-            avatarUrl: profile.avatarUrl
-        })
-    }
-
     render() {
 
         const{
-            avatar,
-            token
-            // profile
+            avatar
         } = this.props
-
-        // const name = profile.name;
-        // const country = profile.country;
-        // const bio = profile.country;
-        // const avatarUrl = profile.avatarUrl;
 
 
         return (
@@ -122,11 +103,11 @@ import { baseUrl } from '../../config';
                         <form id="profile-form">
 
                             <FormElement type={"text"} label={"Name"} value={this.state.name} onChangeFunc={this.handleNameChange}></FormElement>
-                            <FormElement type={"text"} label={"Country"} value={"enter your country"} onChangeFunc={this.handleCountryChange}></FormElement>
+                            <FormElement type={"text"} label={"Country"} value={this.state.location? this.state.location : "enter your location"} onChangeFunc={this.handleLocationChange}></FormElement>
 
                             <div>
                                 <label>Bio</label>
-                                <textarea rows="4" placeholder="Tell us about yourself" onChange={this.handleBioChange}></textarea>
+                                <textarea rows="4" placeholder={this.state.bio? this.state.bio : "Tell us about yourself"} onChange={this.handleBioChange}></textarea>
                             </div> 
                             <button className="btn-primary" type="button" onClick={this.handleProfileUpdate}>Update</button>
                             <Link to="/">Main Page</Link>

@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import Axios from 'axios';
+import Axios from 'axios'
 
 import FormElement from '../FormElement'
+import Nav from '../Nav'
 import { baseUrl } from '../../config'
 
 /**
@@ -83,9 +84,14 @@ import { baseUrl } from '../../config'
 
     render() {
 
+        const {
+            token,
+            logo
+        } = this.props
+
         return (
             <div>
-                {/* <Nav logo={avatar} avatar={avatar}/> */}
+                <Nav logo={logo} handleLogout={""} token={token} userAvatar={logo} isInMainPAge={false}/>
 
                 <div className="container">   
 
