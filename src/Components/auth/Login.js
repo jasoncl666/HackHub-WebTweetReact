@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 import LoginForm from './LoginForm'
+import Signup from './Signup'
 import Nav from '../Nav'
 
 /**
@@ -14,9 +15,11 @@ import Nav from '../Nav'
 
         const {
             token,
-            logo
+            logo,
+            handleTokenUpdate,
+            handleProfileUpdate
         } = this.props
-        
+
         return (
             <div>
                 <Nav logo={logo} handleLogout={""} token={token} userAvatar={logo} isInMainPAge={false}/>
@@ -25,7 +28,7 @@ import Nav from '../Nav'
 
                     <div className="col-2of5 bg-white">
 
-                        <LoginForm line={"Welcome Back!"} handleTokenUpdate={this.props.handleTokenUpdate} handleProfileUpdate={this.props.handleProfileUpdate} token={token} />
+                        <LoginForm line={"Welcome Back!"} handleTokenUpdate={handleTokenUpdate} handleProfileUpdate={handleProfileUpdate} token={token} />
                     </div>
                 </div>
             </div>

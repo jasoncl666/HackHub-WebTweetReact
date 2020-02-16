@@ -7,6 +7,8 @@ import Page from './Components/Page';
 import ProfileForm from './Components/profile/ProfileForm';
 import Login from './Components/auth/Login'
 import Signup from './Components/auth/Signup'
+import Auth from './Components/auth/Auth'
+
 import Axios from 'axios';
 
 import { baseUrl } from './config';
@@ -59,17 +61,19 @@ class App extends Component{
 
     return (
       <Router>
+
         <div className="App">
+
+          {/* Nav can be added here */}
+
           <Switch>
             <Route exact path="/" render={()=> 
               <Page logo={logo} handleLogout={hL} handleTokenUpdate={hTU} handleProfileUpdate={hPU} token={token} profile={this.state.profile}/>}/>
-        
-            <Route path="/login" render={() => 
-              <Login logo={logo} handleTokenUpdate={hTU} handleProfileUpdate={hPU} token={token}/>}/>
-        
-            <Route path="/signup" render={() => 
-              <Signup logo={logo} handleTokenUpdate={hTU} handleProfileUpdate={hPU} token={token}/>}/>
-            
+
+            {/* Nested Router */}
+            <Route path="/auth" render={() => 
+              <Auth logo={logo} handleTokenUpdate={hTU} handleProfileUpdate={hPU} token={token}/>}/>
+
             {/* <Route exact path="/profile" render={() => 
               <Profile avatar={logo} profile={this.state.profile}/>}/> */}
 

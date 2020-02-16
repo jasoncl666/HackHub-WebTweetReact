@@ -106,7 +106,7 @@ import { baseUrl } from '../../config';
                         </form>
                     </div>
 
-                    {token? <h5 className="row"><Link to="/">Your Page</Link></h5> : <h5 className="row">Don't have an account? <Link to="/signup">Sign up</Link></h5>}              
+                    {token? <h5 className="row"><Link to="/">Your Page</Link></h5> : <h5 className="row">Don't have an account? <Link to="auth/signup">Sign up</Link></h5>}              
                 </div>
             </div>
         );

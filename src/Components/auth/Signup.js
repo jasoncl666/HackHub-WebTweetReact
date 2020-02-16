@@ -75,6 +75,8 @@ import { baseUrl } from '../../config'
           }).then(res => {
             if (res.data.error) {
                 console.log(res.data.error)
+
+                // Windows Location Redirect
             } else {
                 that.props.handleTokenUpdate(res.data.token);
                 console.log(res.data.token);
@@ -109,7 +111,7 @@ import { baseUrl } from '../../config'
                             </form>
                         </div>
 
-                        <h5 className="row">Have an account?<Link to="/login">Log in</Link></h5>
+                        <h5 className="row">Have an account?<Link to="/auth/login">Log in</Link></h5>
                         <h5 className="row"><Link to="/"> home </Link></h5>
                         
                     </div>

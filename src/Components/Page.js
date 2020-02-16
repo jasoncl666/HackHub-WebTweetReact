@@ -64,7 +64,9 @@ class Page extends Component {
      * Loading tweets and profile when mounting this page
      */
     componentDidMount = () => {
-        this.getTweets()
+        // this.getTweets() 
+        this.handleTweetUpdate()
+
     }
 
     /** Delete User's own tweet when click on delete button 
@@ -117,7 +119,7 @@ class Page extends Component {
                         {!token && <LoginForm line={"Have an account?"} handleTokenUpdate={handleTokenUpdate} handleProfileUpdate={handleProfileUpdate} token={token} />}
                     </div>
                     <div className="col-3of5 bg-white">
-                        {token && <TweetPost avatar={logo} handleNewPost={this.handleTweetUpdate}/>}
+                        {token && <TweetPost avatar={logo} handleNewPost={this.handleTweetUpdate} token={token}/>}
                         <TweetList tweets={this.state.tweets} token={token} curUser={curUser} handleTweetDelete={this.handleTweetUpdate}/>
                     </div>
                     <button onClick={this.testUpdate}> Test Update</button>

@@ -23,6 +23,9 @@ class TweetPost extends Component {
         let that = this;
         
         console.log("New Content: " + this.state.content)
+
+        console.log("token: " + this.props.token)
+
         Axios.post(baseUrl+"/tweet", {
             content: that.state.content,
             imageUrl: 'https://ucarecdn.com/8c34b406-c767-4858-91e2-cb1e45ad231f/'
@@ -41,7 +44,7 @@ class TweetPost extends Component {
                     content: ""
                 })
 
-                that.props.handleNewPost()
+                that.props.handleNewPost(res.data.tweets)
             }
         })
 

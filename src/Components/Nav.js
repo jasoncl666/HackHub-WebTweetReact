@@ -22,7 +22,7 @@ class Nav extends Component {
                     <ul>
                         <li><Link to="/"><img className="logo" src={logo} alt="webdxd" /></Link></li>
                         <li><Link to="/">Home</Link></li>
-                        {isInMainPAge? (this.props.token ? <li onClick={handleLogout}>Logout</li> : <li><Link to="/login">Login</Link></li>) : "" }
+                        {isInMainPAge? (this.props.token ? <li onClick={handleLogout}>Logout</li> : <li><Link to="/auth/login">Login</Link></li>) : "" }
                         {this.props.token && <li><Link to="/profile/edit">Profile</Link></li>}
                     </ul>
                     <div>
