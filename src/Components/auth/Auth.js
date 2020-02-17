@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import React from 'react'
+import {Route} from 'react-router-dom'
 import Login from './Login'
 import Signup from './Signup'
 
@@ -7,7 +7,6 @@ import Signup from './Signup'
 function Auth(props){
 
     const {
-        token,
         logo,
         handleTokenUpdate,
         handleProfileUpdate
@@ -17,10 +16,10 @@ function Auth(props){
 
         <div>
             <Route path="/auth/login" render={() => 
-              <Login logo={logo} handleTokenUpdate={handleTokenUpdate} handleProfileUpdate={handleProfileUpdate} token={token}/>}/>
+              <Login logo={logo} />}/>
         
             <Route path="/auth/signup" render={() => 
-              <Signup logo={logo} handleTokenUpdate={handleTokenUpdate} handleProfileUpdate={handleProfileUpdate} token={token}/>}/>
+              <Signup logo={logo} />}/>
         </div>
     )
 }

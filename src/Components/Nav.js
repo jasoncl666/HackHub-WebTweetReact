@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import {connect} from 'react-redux'
 
 class Nav extends Component {
 
@@ -11,6 +12,7 @@ class Nav extends Component {
 
         const {
             logo,
+            token,
             handleLogout,
             userAvatar,
             isInMainPAge
@@ -22,7 +24,7 @@ class Nav extends Component {
                     <ul>
                         <li><Link to="/"><img className="logo" src={logo} alt="webdxd" /></Link></li>
                         <li><Link to="/">Home</Link></li>
-                        {isInMainPAge? (this.props.token ? <li onClick={handleLogout}>Logout</li> : <li><Link to="/auth/login">Login</Link></li>) : "" }
+                        {isInMainPAge? (token ? <li onClick={handleLogout}>Logout</li> : <li><Link to="/auth/login">Login</Link></li>) : "" }
                         {this.props.token && <li><Link to="/profile/edit">Profile</Link></li>}
                     </ul>
                     <div>
@@ -35,4 +37,9 @@ class Nav extends Component {
     }
 }
 
-export default Nav;
+const mapState = state => ({
+
+    token: state.user.token
+})
+
+export default withRouter(connect(mapState, null)(Nav));

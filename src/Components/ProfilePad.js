@@ -26,9 +26,6 @@ class ProfilePad extends Component {
             }
         } = this.props
 
-        // const name = profile.name;
-        // const country = profile.location;
-        // const bio = profile.bio;
         avatarUrl = avatarUrl || 'https://ucarecdn.com/8c34b406-c767-4858-91e2-cb1e45ad231f/';
 
         return (

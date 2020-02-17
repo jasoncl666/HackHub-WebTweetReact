@@ -14,21 +14,18 @@ import Nav from '../Nav'
     render() {
 
         const {
-            token,
             logo,
-            handleTokenUpdate,
-            handleProfileUpdate
         } = this.props
 
         return (
             <div>
-                <Nav logo={logo} handleLogout={""} token={token} userAvatar={logo} isInMainPAge={false}/>
+                <Nav logo={logo} handleLogout={""} userAvatar={logo} isInMainPAge={false}/>
 
                 <div className="container">   
 
                     <div className="col-2of5 bg-white">
 
-                        <LoginForm line={"Welcome Back!"} handleTokenUpdate={handleTokenUpdate} handleProfileUpdate={handleProfileUpdate} token={token} />
+                        <LoginForm line={"Welcome Back!"} />
                     </div>
                 </div>
             </div>

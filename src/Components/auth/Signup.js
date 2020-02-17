@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, withRouter } from 'react-router-dom'
 import Axios from 'axios'
+import {connect} from 'react-redux';
 
 import FormElement from '../FormElement'
 import Nav from '../Nav'
@@ -78,8 +79,7 @@ import { baseUrl } from '../../config'
 
                 // Windows Location Redirect
             } else {
-                that.props.handleTokenUpdate(res.data.token);
-                console.log(res.data.token);
+                that.props.updateUser({profile: res.data.profile, token: res.data.token})
             }
           })
     }
@@ -87,13 +87,12 @@ import { baseUrl } from '../../config'
     render() {
 
         const {
-            token,
             logo
         } = this.props
 
         return (
             <div>
-                <Nav logo={logo} handleLogout={""} token={token} userAvatar={logo} isInMainPAge={false}/>
+                <Nav logo={logo} handleLogout={""} userAvatar={logo} isInMainPAge={false}/>
 
                 <div className="container">   
 
@@ -121,4 +120,9 @@ import { baseUrl } from '../../config'
     }
  }
 
- export default Signup;
+ const mapDispatch = dispatch => ({
+    updateUser: (user) => dispatch.user.update(user)
+ })
+
+
+ export default withRouter(connect(null, mapDispatch)(Signup));

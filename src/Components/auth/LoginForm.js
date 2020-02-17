@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import Axios from 'axios';
+
+import {connect} from 'react-redux';
 
 import FormElement from '../FormElement';
 import { baseUrl } from '../../config';
@@ -58,8 +60,6 @@ import { baseUrl } from '../../config';
      * Sending post to API for login request
      * 
      * if token is granted (login succeed), up-lifting the token to Page Component and Redirect
-     * 
-     * 
      */
     handleSubmit = () => {
         let that = this;
@@ -72,11 +72,10 @@ import { baseUrl } from '../../config';
             if (res.data.error) {
                 console.log(res.data.error)
             } else {
-                that.props.handleTokenUpdate(res.data.token);
-                that.props.handleProfileUpdate(res.data.profile);
+
+                that.props.updateUser({profile: res.data.profile, token: res.data.token})
 
                 console.log(res.data.profile)
-
             }
         })
     }
@@ -113,4 +112,11 @@ import { baseUrl } from '../../config';
     }
  }
 
- export default LoginForm;
+const mapState = state => ({
+    token: state.user.token
+})
+
+const mapDispatch = disPatch => ({
+    updateUser: (user)=> disPatch.user.update(user)
+ })
+ export default withRouter(connect(mapState, mapDispatch)(LoginForm));

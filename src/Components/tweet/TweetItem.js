@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import Axios from 'axios';
 import { baseUrl } from '../../config';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
+
 
 class TweetItem extends Component {
 
@@ -37,13 +40,8 @@ class TweetItem extends Component {
         const name = value.author.name;
         const username = value.author.username;
         const avatarUrl = value.author.avatarUrl || 'https://ucarecdn.com/8c34b406-c767-4858-91e2-cb1e45ad231f/';
-        const id = value._id;
 
-        // console.log("value: ")
-        // console.log(value)
-        
-        
-
+        console.log("current user: " + curUser + ", username: " + username)
 
         return (
             <div className="tweet">
@@ -60,4 +58,9 @@ class TweetItem extends Component {
     }
 }
 
-export default TweetItem;
+const mapState = state => ({
+    token: state.user.token
+})
+
+
+export default withRouter(connect(mapState, null)(TweetItem));

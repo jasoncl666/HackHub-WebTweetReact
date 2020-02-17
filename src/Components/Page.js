@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import { baseUrl } from '../config';
 // import moment from 'moment';
+import { withRouter } from 'react-router-dom'
 
 import Nav from './Nav'
 import TweetList from './tweet/TweetList';
 import ProfilePad from './ProfilePad';
 import TweetPost from './tweet/TweetPost';
 import LoginForm from './auth/LoginForm';
+
+import {connect} from 'react-redux'
 
 
 
@@ -86,7 +89,7 @@ class Page extends Component {
      */
     testUpdate = () => {
         console.log("Page Profile: ")
-        console.log(this.state.profile)
+        console.log(this.props.profile)
 
         console.log("Page token: " + this.props.token)
     }
@@ -97,30 +100,29 @@ class Page extends Component {
         const {
             logo,
             handleLogout,
-            handleTokenUpdate,
-            handleProfileUpdate,
-            token
+            token,
+            profile
         } = this.props
 
-        const curUser = this.state.profile.username;
+        const curUser = profile.username;
         const userAvatar = token? (this.state.profile.avatarUrl || 'https://ucarecdn.com/8c34b406-c767-4858-91e2-cb1e45ad231f/') : logo;
 
 
 
         return (
             <div>
-                <Nav logo={logo} handleLogout={handleLogout} token={token} userAvatar={userAvatar} isInMainPAge={true}/>
+                <Nav logo={logo} handleLogout={handleLogout} userAvatar={userAvatar} isInMainPAge={true}/>
                 <div className="container">
                     <div className="col-3of10 bg-white">
-                        {token && <ProfilePad profile={this.props.profile} token={token}/>}
+                        {token && <ProfilePad profile={profile}/>}
 
                         {/* puttng LoginForm here will update profile in App, but wont update profile in Page's state
                             however, ref directly to this.props.profile works. don't know why */}
-                        {!token && <LoginForm line={"Have an account?"} handleTokenUpdate={handleTokenUpdate} handleProfileUpdate={handleProfileUpdate} token={token} />}
+                        {!token && <LoginForm line={"Have an account?"} />}
                     </div>
                     <div className="col-3of5 bg-white">
-                        {token && <TweetPost avatar={logo} handleNewPost={this.handleTweetUpdate} token={token}/>}
-                        <TweetList tweets={this.state.tweets} token={token} curUser={curUser} handleTweetDelete={this.handleTweetUpdate}/>
+                        {token && <TweetPost avatar={logo} handleNewPost={this.handleTweetUpdate}/>}
+                        <TweetList tweets={this.state.tweets} curUser={curUser} handleTweetDelete={this.handleTweetUpdate}/>
                     </div>
                     <button onClick={this.testUpdate}> Test Update</button>
                 </div>
@@ -129,4 +131,17 @@ class Page extends Component {
     }
 }
 
-export default Page;
+const mapState = state => ({
+
+    profile: state.user.profile,
+    tweets: state.tweets,
+    token: state.user.token
+
+})
+
+const mapDispatch = state => {
+
+}
+
+
+export default withRouter(connect(mapState, null)(Page));

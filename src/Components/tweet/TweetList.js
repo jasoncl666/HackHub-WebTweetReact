@@ -15,7 +15,7 @@ class TweetList extends Component {
 
         return (
             <div>
-                {tweets.map(tweet => <TweetItem value={tweet} key={tweet._id} curUser={curUser} token={token} handleTweetDelete={handleTweetDelete}/>)}
+                {tweets.map(tweet => <TweetItem value={tweet} key={tweet._id} curUser={curUser} handleTweetDelete={handleTweetDelete}/>)}
             </div>
         );
     }
